@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #fff;
+    }
+    #qr img, #qr canvas { display: block; }
+  </style>
+</head>
+<body>
+  <div id="qr"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search)
+    const text = params.get('text') || params.get('chl') || ''
+    const size = Math.min(Math.max(parseInt(params.get('size') || '200'), 80), 600)
+
+    if (text) {
+      new QRCode(document.getElementById('qr'), {
+        text,
+        width: size,
+        height: size,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H,
+      })
+    }
+  </script>
+</body>
+</html>
